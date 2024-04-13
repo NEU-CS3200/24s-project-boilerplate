@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS team_members (
 CREATE TABLE IF NOT EXISTS sports (
     sportID int,
     name varchar(50),
-    rules TEXT,
+    rules text,
     PRIMARY KEY (sportID)
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS teams (
 CREATE TABLE IF NOT EXISTS roles (
     roleID int,
     name varchar(50),
-    description TEXT,
+    description text,
     PRIMARY KEY (roleID)
 );
 
@@ -45,9 +45,7 @@ CREATE TABLE IF NOT EXISTS part_of (
     FOREIGN KEY (memberID) REFERENCES team_members (memberID)
                                  ON UPDATE CASCADE,
     FOREIGN KEY (sportID, teamID) REFERENCES teams (sportID, teamID)
-                                 ON UPDATE CASCADE,
-    FOREIGN KEY (roleID) REFERENCES roles (roleID)
-                                   ON UPDATE CASCADE
+                                 ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS admins (
@@ -70,7 +68,7 @@ CREATE TABLE IF NOT EXISTS sponsors (
 
 CREATE TABLE IF NOT EXISTS events (
     eventID int,
-    description TEXT,
+    description text,
     dateTime datetime,
     location varchar(50),
     sponsorID int,
@@ -114,6 +112,7 @@ CREATE TABLE IF NOT EXISTS referees (
     refID int,
     firstName varchar(50),
     lastName varchar(50),
+    email varchar(50),
     PRIMARY KEY (refID)
 );
 
@@ -315,16 +314,16 @@ insert into team_game (teamID, sportID, gameID, score) values (1, 2, 10, 1);
 insert into team_game (teamID, sportID, gameID, score) values (2, 2, 10, 5);
 
 # referees data
-insert into referees (refID, firstName, lastName) values (1, 'Valencia', 'Towlson');
-insert into referees (refID, firstName, lastName) values (2, 'Natala', 'Crouse');
-insert into referees (refID, firstName, lastName) values (3, 'Saunderson', 'Mylan');
-insert into referees (refID, firstName, lastName) values (4, 'Brion', 'Fairham');
-insert into referees (refID, firstName, lastName) values (5, 'Finlay', 'Hallatt');
-insert into referees (refID, firstName, lastName) values (6, 'Kaitlyn', 'Mattiazzi');
-insert into referees (refID, firstName, lastName) values (7, 'Sebastien', 'Manderson');
-insert into referees (refID, firstName, lastName) values (8, 'Delilah', 'Aronovich');
-insert into referees (refID, firstName, lastName) values (9, 'Humfrid', 'Toothill');
-insert into referees (refID, firstName, lastName) values (10, 'Max', 'Andryszczak');
+INSERT INTO referees (refID, firstName, lastName, email) VALUES (1, 'Valencia', 'Towlson', 'valencia@example.com');
+INSERT INTO referees (refID, firstName, lastName, email) VALUES (2, 'Natala', 'Crouse', 'natala@example.com');
+INSERT INTO referees (refID, firstName, lastName, email) VALUES (3, 'Saunderson', 'Mylan', 'saunderson@example.com');
+INSERT INTO referees (refID, firstName, lastName, email) VALUES (4, 'Brion', 'Fairham', 'brion@example.com');
+INSERT INTO referees (refID, firstName, lastName, email) VALUES (5, 'Finlay', 'Hallatt', 'finlay@example.com');
+INSERT INTO referees (refID, firstName, lastName, email) VALUES (6, 'Kaitlyn', 'Mattiazzi', 'kaitlyn@example.com');
+INSERT INTO referees (refID, firstName, lastName, email) VALUES (7, 'Sebastien', 'Manderson', 'sebastien@example.com');
+INSERT INTO referees (refID, firstName, lastName, email) VALUES (8, 'Delilah', 'Aronovich', 'delilah@example.com');
+INSERT INTO referees (refID, firstName, lastName, email) VALUES (9, 'Humfrid', 'Toothill', 'humfrid@example.com');
+INSERT INTO referees (refID, firstName, lastName, email) VALUES (10, 'Max', 'Andryszczak', 'max@example.com');
 
 # officiates data
 insert into officiates (refID, gameID) values (1, 1);
