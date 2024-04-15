@@ -1,4 +1,4 @@
-# MySQL + Flask Boilerplate Project
+c/Users/airelynguadagno/Desktop/3200-practice/24s-project-boilerplate/docker-compose.yml# MySQL + Flask Boilerplate Project
 
 This repo contains a boilerplate setup for spinning up 3 Docker containers: 
 1. A MySQL 8 container for obvious reasons
