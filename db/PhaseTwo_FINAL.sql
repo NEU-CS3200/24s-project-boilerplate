@@ -6,11 +6,11 @@ USE Scheduling;
 CREATE TABLE Users (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     role VARCHAR(50),
-    hourlyRate FLOAT(2), # In dollars
+    hourlyRate FLOAT(2), --In dollars
     firstName VARCHAR(50),
     lastName VARCHAR(50),
-    sharesOwned INTEGER DEFAULT 0, # Ownership percentage
-    active BOOLEAN DEFAULT TRUE # If they're still employed
+    sharesOwned INTEGER DEFAULT 0, --Ownership percentage
+    active BOOLEAN DEFAULT TRUE --If they're still employed
 );
 
 CREATE TABLE UserManagers (
@@ -38,7 +38,7 @@ CREATE TABLE Locations (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Schedules ( # Why does this table exist?
+CREATE TABLE Schedules ( --Why does this table exist?
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     location INTEGER NOT NULL,
     CONSTRAINT locatedAt FOREIGN KEY (location)
@@ -66,11 +66,11 @@ CREATE TABLE TimeOffRequests (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-# Multivalued attribute Times of TimeOffRequests
+--Multivalued attribute Times of TimeOffRequests
 CREATE TABLE Times (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     startDate DATETIME NOT NULL,
-    endDate DATETIME NOT NULL, # Should be after startDate
+    endDate DATETIME NOT NULL, --Should be after startDate
     request INTEGER,
     CONSTRAINT requestKey FOREIGN KEY (request)
         REFERENCES TimeOffRequests (id)
@@ -80,9 +80,9 @@ CREATE TABLE Times (
 CREATE TABLE Shifts (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     duty VARCHAR(50),
-    dayOfWeek INTEGER, # 0 = Monday, 6 = Sunday
+    dayOfWeek INTEGER, --1 = Monday, 7 = Sunday
     startTime TIME,
-    endTime TIME, # Should be after startTime
+    endTime TIME, --Should be after startTime
     overtime BOOLEAN DEFAULT FALSE,
     employee INTEGER,
     schedule INTEGER,
