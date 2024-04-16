@@ -26,6 +26,6 @@ def put_request(id):
 
 # Deletes a time-off request (and all associated times)
 @torequests.route('/requests/<id>', methods = ['DELETE'])
-def delete_shift(id):
+def delete_request(id):
     delete_helper('Times', id, 'request')
     return delete_helper('TimeOffRequests', id)
