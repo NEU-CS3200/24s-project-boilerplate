@@ -80,10 +80,11 @@ CREATE TABLE Times (
 CREATE TABLE Shifts (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     duty VARCHAR(50),
-    dayOfWeek INTEGER, --1 = Monday, 7 = Sunday
+    dayOfWeek INTEGER, --0 = Monday, 6 = Sunday
     startTime TIME,
     endTime TIME, --Should be after startTime
     overtime BOOLEAN DEFAULT FALSE,
+    effectiveOn DATE DEFAULT CURRENT_DATE,
     employee INTEGER,
     schedule INTEGER,
     CONSTRAINT workedBy FOREIGN KEY (employee)
