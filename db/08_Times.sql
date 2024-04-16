@@ -98,3 +98,7 @@ insert into Times (startDate, endDate, request, id) values ('2023-08-10 16:55:55
 insert into Times (startDate, endDate, request, id) values ('2023-10-04 23:32:54', '2023-07-26 13:31:25', 57, 98);
 insert into Times (startDate, endDate, request, id) values ('2024-03-26 23:35:11', '2023-05-03 13:42:05', 46, 99);
 insert into Times (startDate, endDate, request, id) values ('2024-02-02 03:36:42', '2023-08-23 05:16:11', 68, 100);
+
+UPDATE Times
+SET startDate = LEAST(startDate, endDate),
+    endDate = GREATEST(startDate, endDate);
