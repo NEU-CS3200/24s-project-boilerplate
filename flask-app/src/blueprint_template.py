@@ -44,8 +44,3 @@ def delete_helper(table, val, key = 'id'):
     query = f'DELETE FROM {table} WHERE {key} = {val}'
     execute(query, commit = True)
     return 'Success!'
-
-
-def get_max_value(table, col = 'id'):
-    query = f'SELECT MAX({col}) AS x FROM {table}'
-    return execute(query)['x']
