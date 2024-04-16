@@ -4,7 +4,6 @@ CREATE DATABASE newHuskyLeagues;
 
 USE newHuskyLeagues;
 
-
 CREATE TABLE IF NOT EXISTS team_members (
     memberID int,
     firstName varchar(50),
@@ -101,7 +100,6 @@ CREATE TABLE IF NOT EXISTS games (
     team2_score int,
     team1_sportID int,
     team2_sportID int,
-    CONSTRAINT sports_same CHECK (team1_sportID = team2_sportID),
     PRIMARY KEY (gameID),
     FOREIGN KEY(team1_ID, team1_sportID) REFERENCES teams (teamID, sportID)
                                  ON UPDATE CASCADE,
@@ -110,7 +108,6 @@ CREATE TABLE IF NOT EXISTS games (
     INDEX (team1_ID, team1_sportID),
     INDEX (team2_ID, team2_sportID)
 );
-
 
 CREATE TABLE IF NOT EXISTS referees (
     refID int,
@@ -172,7 +169,7 @@ CREATE TABLE IF NOT EXISTS follows_teams (
 CREATE TABLE IF NOT EXISTS follows_sports (
     fanID int,
     sportID int,
-    PRIMARY KdEY (fanID, sportID),
+    PRIMARY KEY (fanID, sportID),
     FOREIGN KEY (fanID) REFERENCES fans (fanID)
                                             ON UPDATE CASCADE,
     FOREIGN KEY (sportID) REFERENCES sports (sportID)
