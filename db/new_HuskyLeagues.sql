@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS follows_teams (
 CREATE TABLE IF NOT EXISTS follows_sports (
     fanID int,
     sportID int,
-    PRIMARY KEY (fanID, sportID),
+    PRIMARY KdEY (fanID, sportID),
     FOREIGN KEY (fanID) REFERENCES fans (fanID)
                                             ON UPDATE CASCADE,
     FOREIGN KEY (sportID) REFERENCES sports (sportID)
