@@ -14,8 +14,9 @@ def get_locations():
 @locations.route('/locations', methods = ['POST'])
 def post_location():
     data = post_helper('Locations', True)
-    id = data.get("id") or get_max_value('Locations')
-    execute(f'INSERT INTO Schedules (location) VALUES ({id})')
+    id = '(SELECT MAX(id) FROM Locations)'
+    if data.get('id'): id = f'VALUES ({data["id"]})'
+    execute(f'INSERT INTO Schedules (location) {id}')
     return 'Success!'
     
 
