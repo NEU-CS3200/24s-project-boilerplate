@@ -1,4 +1,4 @@
-from blueprint_template import *
+from src.blueprint_template import *
 users = Blueprint('users', __name__)
 
 
