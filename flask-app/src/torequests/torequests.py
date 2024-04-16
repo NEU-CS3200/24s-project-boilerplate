@@ -1,4 +1,4 @@
-from blueprint_template import *
+from src.blueprint_template import *
 torequests = Blueprint('requests', __name__)
 
 
