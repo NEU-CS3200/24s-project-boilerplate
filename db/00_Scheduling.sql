@@ -1,5 +1,5 @@
+DROP DATABASE IF EXISTS Scheduling;
 CREATE DATABASE Scheduling;
-
 USE Scheduling;
 
 
