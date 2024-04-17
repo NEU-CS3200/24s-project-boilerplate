@@ -2,6 +2,7 @@ from src.blueprint_template import *
 shifts = Blueprint('shifts', __name__)
 
 
+# USER STORY 3.3, 3.2
 # Get all shifts associated with a given user ID
 @shifts.route('/shifts/user/<id>', methods = ['GET'])
 def get_user_shifts(id):
@@ -13,6 +14,7 @@ def get_user_shifts(id):
     return get_helper(query)
 
 
+# USER STORY 1.1, 2.1
 # Get all shifts associated with a given location ID
 @shifts.route('/shifts/location/<id>', methods = ['GET'])
 def get_location_shifts(id):
@@ -29,6 +31,7 @@ def post_shift():
     return post_helper('Shifts')
 
 
+# USER STORY 2.4
 # Edit the shift associated with a given ID
 @shifts.route('/shifts/<id>', methods = ['PUT'])
 def put_shift(id):
@@ -41,6 +44,7 @@ def delete_shift(id):
     return delete_helper('Shifts', id)
 
 
+# USER STORY 3.1
 # Transfer all of an employee's shifts to another employee
 @shifts.route('/transferShifts', methods = ['PUT'])
 def transfer_shifts(id):
@@ -50,3 +54,10 @@ def transfer_shifts(id):
     query = f'UPDATE Shifts SET employee = {id2} WHERE employee = {id1}'
     execute(query, commit = True)
     return 'Success!'
+
+
+# USER STORY 4.2
+# Retrieve all tasks and display them
+@shifts.route('/tasks', methods = ['GET'])
+def get_tasks():
+    return get_helper('SELECT * FROM Tasks')
