@@ -2,6 +2,7 @@ from src.blueprint_template import *
 torequests = Blueprint('requests', __name__)
 
 
+# USER STORY 1.3
 # Gets all unviewed time-off requests and additional information about them
 @torequests.route('/requests', methods = ['GET'])
 def get_unapproved_requests():
@@ -24,12 +25,14 @@ def get_user_requests(createdBy):
     return get_helper(query)
 
 
+# USER STORY 3.1
 # Adds a new time-off requests
 @torequests.route('/requests', methods = ['POST'])
 def post_request():
     return post_helper('TimeOffRequests')
 
 
+# USER STORY 1.3
 # Edit the time-off request associated with a given ID
 @torequests.route('/requests/<id>', methods = ['PUT'])
 def put_request(id):
