@@ -6,11 +6,11 @@ USE Scheduling;
 CREATE TABLE Users (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     role VARCHAR(50),
-    hourlyRate FLOAT(2), --In dollars
+    hourlyRate FLOAT(2), -- In dollars
     firstName VARCHAR(50),
     lastName VARCHAR(50),
-    sharesOwned INTEGER DEFAULT 0, --Ownership percentage
-    active BOOLEAN DEFAULT TRUE --If they're still employed
+    sharesOwned INTEGER DEFAULT 0, -- Ownership percentage
+    active BOOLEAN DEFAULT TRUE -- If they're still employed
 );
 
 CREATE TABLE UserManagers (
@@ -27,18 +27,18 @@ CREATE TABLE UserManagers (
 
 CREATE TABLE Locations (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    address1 VARCHAR(100) NOT NULL, # Line 1
-    address2 VARCHAR(100), # Line 2 (optional)
+    address1 VARCHAR(100) NOT NULL, -- Line 1
+    address2 VARCHAR(100), -- Line 2 (optional)
     city  VARCHAR(50),
-    state CHAR(2), # State abbreviation
-    zip CHAR(5), # Should be numeric
+    state CHAR(2), -- State abbreviation
+    zip CHAR(5), -- Should be numeric
     owner INTEGER,
     CONSTRAINT ownedBy FOREIGN KEY (owner)
         REFERENCES Users (id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Schedules ( --Why does this table exist?
+CREATE TABLE Schedules (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     location INTEGER NOT NULL,
     CONSTRAINT locatedAt FOREIGN KEY (location)
@@ -66,11 +66,10 @@ CREATE TABLE TimeOffRequests (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
---Multivalued attribute Times of TimeOffRequests
 CREATE TABLE Times (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     startDate DATETIME NOT NULL,
-    endDate DATETIME NOT NULL, --Should be after startDate
+    endDate DATETIME NOT NULL,
     request INTEGER,
     CONSTRAINT requestKey FOREIGN KEY (request)
         REFERENCES TimeOffRequests (id)
@@ -80,11 +79,10 @@ CREATE TABLE Times (
 CREATE TABLE Shifts (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     duty VARCHAR(50),
-    dayOfWeek INTEGER, --0 = Monday, 6 = Sunday
+    dayOfWeek INTEGER, -- 0 = Monday, 6 = Sunday
     startTime TIME,
-    endTime TIME, --Should be after startTime
+    endTime TIME,
     overtime BOOLEAN DEFAULT FALSE,
-    effectiveOn DATE DEFAULT CURRENT_DATE,
     employee INTEGER,
     schedule INTEGER,
     CONSTRAINT workedBy FOREIGN KEY (employee)
