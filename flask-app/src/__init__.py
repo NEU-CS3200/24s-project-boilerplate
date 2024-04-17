@@ -19,27 +19,37 @@ def create_app():
     app.config['MYSQL_DATABASE_PASSWORD'] = open('/secrets/db_root_password.txt').readline().strip()
     app.config['MYSQL_DATABASE_HOST'] = 'db'
     app.config['MYSQL_DATABASE_PORT'] = 3306
-    app.config['MYSQL_DATABASE_DB'] = 'northwind'  # Change this to your DB name
+    app.config['MYSQL_DATABASE_DB'] = 'GoMass'  # Change this to your DB name
 
     # Initialize the database object with the settings above. 
     db.init_app(app)
     
-    # Add the default route
-    # Can be accessed from a web browser
-    # http://ip_address:port/
-    # Example: localhost:8001
+     # Default route
     @app.route("/")
     def welcome():
-        return "<h1>Welcome to the 3200 boilerplate app</h1>"
+        return "<h1>Welcome to the GoMass API TESTING</h1>"
 
-    # Import the various Beluprint Objects
-    from src.customers.customers import customers
-    from src.products.products  import products
+    # Import the blueprint objects 
+    from src.Movies.movies import movies_blueprint
+    from src.PaymentPlan.payment_plan import payment_plan_blueprint
+    from src.Transportation.transportation import transportation_blueprint
+    from src.Shopping.shopping import shopping_blueprint
+    from src.InterestsHobbies.interestshobbies import hobbies_blueprint
+    from src.Cafes.cafe import cafes
+    from src.Destination.destination import destination_blueprint
+    from src.User.user import user_blueprint
+    from src.GroupActivity.groupactivity import groupact_blueprint
 
-    # Register the routes from each Blueprint with the app object
-    # and give a url prefix to each
-    app.register_blueprint(customers,   url_prefix='/c')
-    app.register_blueprint(products,    url_prefix='/p')
+    # Register blueprints with the app object and give a url prefix to each
+    app.register_blueprint(movies_blueprint, url_prefix='/movies')
+    app.register_blueprint(payment_plan_blueprint, url_prefix='/payment_plan')
+    app.register_blueprint(transportation_blueprint, url_prefix='/transportation')
+    app.register_blueprint(shopping_blueprint, url_prefix='/shopping')
+    app.register_blueprint(user_blueprint,   url_prefix='/group_activity')
+    app.register_blueprint(hobbies_blueprint,   url_prefix='/hobbies')
+    app.register_blueprint(cafes,   url_prefix='/cafes')
+    app.register_blueprint(destination_blueprint,   url_prefix='/destination')
+    app.register_blueprint(groupact_blueprint,   url_prefix='/group_activity')
 
-    # Don't forget to return the app object
+
     return app
