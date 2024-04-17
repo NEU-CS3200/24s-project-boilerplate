@@ -15,6 +15,7 @@ def post_user():
     return post_helper('Users')
 
 
+# USER STORY 4.3
 # Gets all users that are managers of other users
 @users.route('/managers', methods = ['GET'])
 def get_managers():
@@ -30,6 +31,24 @@ def put_user(id):
     return put_helper('Users', id)
 
 
+# USER STORY 2.4
+# Move all of a user's shifts from one location to another
+@users.route('/moveLocation', methods = ['PUT'])
+def move_locations():
+    data = request.json
+    current_app.logger.info(data)
+    userId, locationId = data['userId'], data['locationId']
+    query = f'UPDATE Shifts \
+        SET schedule = ( \
+            SELECT MAX(Sc.id) \
+            FROM Schedules Sc \
+            WHERE location = {locationId}) \
+        WHERE employee = {userId}'
+    execute(query, commit = True)
+    return 'Success!'
+
+
+# USER STORY 3.4, 4.1
 # Get the salaries of all employees during a given time interval
 @users.route('/salaries', methods = ['GET'])
 def get_salaries():
