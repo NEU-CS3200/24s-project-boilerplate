@@ -2,6 +2,10 @@ from src.blueprint_template import *
 users = Blueprint('users', __name__)
 
 
+# NOTE: User story 4.4 about having a simple interface incorporates every single route in the REST API.
+# # For simplicity, I will not be writing it under every single route.
+
+
 # Gets all active users
 @users.route('/users', methods = ['GET'])
 def get_users():
@@ -15,8 +19,7 @@ def post_user():
     return post_helper('Users')
 
 
-# USER STORY 4.3
-# Gets all users that are managers of other users
+# USER STORY 1.2. Gets all users that are managers of other users
 @users.route('/managers', methods = ['GET'])
 def get_managers():
     query = 'SELECT M.*, COUNT(M.id) AS numEmployees \
@@ -31,8 +34,7 @@ def put_user(id):
     return put_helper('Users', id)
 
 
-# USER STORY 2.4
-# Move all of a user's shifts from one location to another
+# USER STORY 2.4. Moving an employee's shifts to a new location
 @users.route('/moveLocation', methods = ['PUT'])
 def move_locations():
     data = request.json
@@ -48,7 +50,6 @@ def move_locations():
     return 'Success!'
 
 
-# USER STORY 3.4, 4.1
 # Get the salaries of all employees during a given time interval
 @users.route('/salaries', methods = ['GET'])
 def get_salaries():
@@ -97,8 +98,8 @@ def get_salaries():
         OR T.endDate BETWEEN Sh.startDate AND Sh.endDate),
     ShiftHours AS (
         SELECT id, employee, (1 + 0.5 * overtime) AS rateScalar,
-            TIMEDIFF(endDate, startDate) / 3600 AS hoursScheduled,
-            SUM(TIMEDIFF(endBreak, startBreak)) / 3600 AS hoursOff
+            TIMESTAMPDIFF(SECOND, startDate, endDate) / 3600 AS hoursScheduled,
+            SUM(TIMESTAMPDIFF(SECOND, startBreak, endBreak)) / 3600 AS hoursOff
         FROM ShiftBreaks GROUP BY id, startDate, endDate),
     ShiftInfo AS (
         SELECT Sh.*, U.firstName, U.lastName,
@@ -109,4 +110,50 @@ def get_salaries():
         SUM(Sh.hourlyRate * Sh.hoursWorked) AS totalPay
     FROM ShiftInfo Sh JOIN Users U on Sh.employee = U.id
     GROUP BY U.id"""
+    return get_helper(query)
+
+
+# Deletes the user associated with a given ID
+@users.route('/users/<id>', methods = ['DELETE'])
+def delete_user(id):
+    return delete_helper('Users', id)
+
+
+# Adds a new user-manager pair
+@users.route('/userManagers', methods = ['POST'])
+def post_user_manager():
+    return post_helper('UserManagers')
+
+
+# USER STORY 4.3. Transfer management of an employee
+@users.route('/userManagers', methods = ['PUT'])
+def put_user_manager():
+    data = request.json
+    current_app.logger.info(data)
+    userId, managerId = data['userId'], data['managerId']
+    query = f'UPDATE UserManagers \
+        SET manager = {managerId} WHERE user = {userId}'
+    execute(query, commit = True)
+    return 'Success!'
+
+
+# Removes a manager as manager of all of their employees
+@users.route('/userManagers/<id>', methods = ['DELETE'])
+def delete_user_manager(id):
+    data = request.json
+    current_app.logger.info(data)
+    managerId = data['managerId']
+    query = f'DELETE FROM UserManagers \
+        WHERE manager = {managerId}'
+    execute(query, commit = True)
+    return delete_helper('UserManagers', id)
+
+
+# USER STORY 4.1. Gets the number of hours each employee has been scheduled for
+@users.route('/userHours', methods = ['GET'])
+def get_user_hours():
+    query = 'SELECT U.id, U.firstName, U.lastName, U.role, U.hourlyRate, COUNT(Sh.id) AS numShifts, \
+            SUM(TIMESTAMPDIFF(SECOND, Sh.startTime, Sh.endTime)) / 3600 AS hoursScheduled \
+        FROM Shifts Sh JOIN Users U ON Sh.employee = U.id \
+        GROUP BY U.id ORDER BY hoursScheduled DESC'
     return get_helper(query)
