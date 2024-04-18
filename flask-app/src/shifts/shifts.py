@@ -2,6 +2,19 @@ from src.blueprint_template import *
 shifts = Blueprint('shifts', __name__)
 
 
+def shifts_get_helper(query):
+    cursor = execute(query)
+    cols = [x[0] for x in cursor.description]
+    for i in range(len(data)):
+        # Extract total seconds and convert to hours
+        start_seconds = data[i]['startTime'].total_seconds()
+        end_seconds = data[i]['endTime'].total_seconds()
+        data[i]['startTime'] = start_seconds / 3600
+        data[i]['endTime'] = end_seconds / 3600
+    data = [dict(zip(cols, row)) for row in cursor.fetchall()]
+    return jsonify(data)
+    
+
 # USER STORY 3.3. Get all shifts associated with a given user ID
 # Also used for user story 3.4, proving clarity on pay, hours, and role
 @shifts.route('/shifts/user/<id>', methods = ['GET'])
@@ -19,7 +32,7 @@ def get_user_shifts(id):
     JOIN Users U ON Sh.employee = U.id
     WHERE Sh.employee = {id}
     ORDER BY dayOfWeek, startTime, endTime"""
-    return get_helper(query)
+    return shifts_get_helper(query)
 
 
 # USER STORY 2.1. Get all shifts associated with a given location ID
@@ -29,7 +42,7 @@ def get_location_shifts(id):
         JOIN Schedules Sc ON Sh.schedule = Sc.id \
         JOIN Users U ON Sh.employee = U.id \
         WHERE Sc.location = {id}'
-    return get_helper(query)
+    return shifts_get_helper(query)
 
 
 # Add a new shift
