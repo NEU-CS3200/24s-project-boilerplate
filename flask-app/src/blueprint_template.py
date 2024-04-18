@@ -11,12 +11,28 @@ def execute(query, commit = False):
     return cursor
 
 
+from datetime import timedelta
+
+def convert_time_to_number(data):
+    for row in data:
+        # Extract total seconds and convert to hours
+        start_seconds = row['startTime'].total_seconds()
+        end_seconds = row['endTime'].total_seconds()
+        
+        # Convert to hours
+        row['startTime'] = start_seconds / 3600
+        row['endTime'] = end_seconds / 3600
+        
+    return data
+
+
 def get_helper(query):
     cursor = execute(query)
     cols = [x[0] for x in cursor.description]
     data = [dict(zip(cols, row)) for row in cursor.fetchall()]
+    data = convert_time_to_number(data)
+    
     return jsonify(data)
-
 
 
 def to_str(val):
