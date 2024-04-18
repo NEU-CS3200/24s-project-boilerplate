@@ -35,3 +35,23 @@ def delete_shift(id):
     execute(query, commit = True)
     delete_helper('Schedules', id, 'location')
     return delete_helper('Locations', id)
+
+
+# USER STORY 2.3. Gets the number of hours scheduled at each location
+@locations.route('/locations/hours', methods = ['GET'])
+def get_location_hours():
+    query = """SELECT L.id, L.address1, L.address2, L.city, L.state,
+        SUM(TIMESTAMPDIFF(SECOND, startTime, endTime)) / 3600 AS hoursScheduled,
+        COUNT(Sh.id) AS numShifts
+    FROM Shifts Sh
+    JOIN Schedules Sc ON Sh.schedule = Sc.id
+    JOIN Locations L ON Sc.location = L.id
+    GROUP BY L.id ORDER BY hoursScheduled DESC"""
+    return get_helper(query)
+
+
+# USER STORY 2.1. Gets all locations associated with a given owner ID
+@locations.route('/owners/<id>', methods = ['GET'])
+def get_owner_locations(id):
+    query = f'SELECT * FROM Locations WHERE owner = {id}'
+    return get_helper(query)
