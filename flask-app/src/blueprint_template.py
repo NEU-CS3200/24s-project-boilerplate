@@ -20,8 +20,8 @@ def get_helper(query):
 
 
 def to_str(val):
-        s = isinstance(val, str)
-        return ('{}','\'{}\'')[s].format(val)
+    s = isinstance(val, str)
+    return ('{}','\'{}\'')[s].format(val)
 
 
 def post_helper(table, return_data = False):
