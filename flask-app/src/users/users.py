@@ -5,7 +5,7 @@ users = Blueprint('users', __name__)
 # Gets all active users
 @users.route('/users', methods = ['GET'])
 def get_users():
-    query = 'SELECT * FROM Users WHERE U.active'
+    query = 'SELECT * FROM Users'
     return get_helper(query)
 
 

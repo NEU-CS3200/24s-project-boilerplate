@@ -1,3 +1,4 @@
+USE Scheduling;
 DELETE FROM Shifts WHERE True;
 
 INSERT INTO Shifts (duty, dayOfWeek, startTime, endTime, overtime, employee, schedule, id) VALUES ('Desktop Support Technician', 0, '11:49:00', '19:46:00', 0, 38, 30, 1);

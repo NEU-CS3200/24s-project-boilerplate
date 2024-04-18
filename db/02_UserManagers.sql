@@ -1,3 +1,4 @@
+USE Scheduling;
 DELETE FROM UserManagers WHERE True;
 
 INSERT INTO UserManagers (employee, manager) VALUES (30, 44);

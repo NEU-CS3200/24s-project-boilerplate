@@ -1,3 +1,4 @@
+USE Scheduling;
 DELETE FROM Schedules WHERE True;
 
 INSERT INTO Schedules (location, id) VALUES (49, 1);

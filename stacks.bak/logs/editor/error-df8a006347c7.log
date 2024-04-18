@@ -1,0 +1,10 @@
+{"level":"info","ts":1713469020.8503456,"msg":"using provided configuration","config_file":"/tmp/appsmith/Caddyfile","config_adapter":""}
+{"level":"info","ts":1713469020.9769475,"msg":"using provided configuration","config_file":"/tmp/appsmith/Caddyfile","config_adapter":""}
+{"level":"info","ts":1713469020.992839,"logger":"admin","msg":"admin endpoint started","address":"127.0.0.1:2019","enforce_origin":false,"origins":["//localhost:2019","//[::1]:2019","//127.0.0.1:2019"]}
+{"level":"warn","ts":1713469020.993356,"logger":"http.auto_https","msg":"server is listening only on the HTTP port, so no automatic HTTPS will be applied to this server","server_name":"srv0","http_port":80}
+{"level":"info","ts":1713469020.9934697,"logger":"tls.cache.maintenance","msg":"started background certificate maintenance","cache":"0xc000762000"}
+{"level":"info","ts":1713469021.0057745,"logger":"http.log","msg":"server running","name":"srv0","protocols":["h1","h2","h3"]}
+{"level":"info","ts":1713469021.0058196,"msg":"serving initial configuration"}
+{"level":"warn","ts":1713469021.109043,"logger":"tls","msg":"storage cleaning happened too recently; skipping for now","storage":"FileStorage:/appsmith-stacks/data/caddy","instance":"dfa1ebbb-f4d9-47a6-979d-7add125813f9","try_again":1713555421.1090367,"try_again_in":86399.999999093}
+{"level":"info","ts":1713469021.1279244,"logger":"tls","msg":"finished cleaning storage units"}
+{"level":"info","ts":1713470316.5961099,"msg":"quitting process immediately","signal":"SIGQUIT"}

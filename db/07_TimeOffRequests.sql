@@ -1,3 +1,4 @@
+USE Scheduling;
 DELETE FROM TimeOffRequests WHERE True;
 
 INSERT INTO TimeOffRequests (reason, submitDate, createdBy, approved, viewedBy, schedule, id) VALUES ('Physical Therapy Assistant', '2023-05-07 03:52:50', 8, 0, 21, 10, 1);

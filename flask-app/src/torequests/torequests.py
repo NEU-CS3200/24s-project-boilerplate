@@ -5,11 +5,7 @@ torequests = Blueprint('requests', __name__)
 # Gets all unviewed time-off requests and additional information about them
 @torequests.route('/requests', methods = ['GET'])
 def get_unapproved_requests():
-    query = 'SELECT *, COUNT(R.id) AS numTimes, SUM(hours) AS hoursOff \
-        FROM TimeOffRequests R JOIN (SELECT *, \
-        TIMEDIFF(endDate, startDate) / 3600 AS hours \
-        FROM Times) T ON R.id = T.request \
-        WHERE R.approved is NULL GROUP BY R.id'
+    query = 'SELECT * FROM TimeOffRequests'
     return get_helper(query)
 
 

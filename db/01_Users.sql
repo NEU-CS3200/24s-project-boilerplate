@@ -1,3 +1,4 @@
+USE Scheduling;
 DELETE FROM Users WHERE True;
 
 INSERT INTO Users (role, hourlyRate, firstName, lastName, sharesOwned, id) VALUES ('Community Outreach Specialist', 32, 'Davie', 'Skey', 16, 1);

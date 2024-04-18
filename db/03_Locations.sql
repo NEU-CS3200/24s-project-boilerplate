@@ -1,3 +1,4 @@
+USE Scheduling;
 DELETE FROM Locations WHERE True;
 
 INSERT INTO Locations (address1, address2, city, state, zip, owner, id) VALUES ('60 Raven Pass', 'PO Box 86073', 'Oklahoma City', 'OK', 68050, 1, 1);

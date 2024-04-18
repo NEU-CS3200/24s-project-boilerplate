@@ -1,3 +1,4 @@
+USE Scheduling;
 DELETE FROM Times WHERE True;
 
 INSERT INTO Times (startDate, endDate, request, id) VALUES ('2023-08-12 11:09:26', '2023-08-22 04:53:16', 7, 1);

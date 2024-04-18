@@ -1,3 +1,4 @@
+USE Scheduling;
 DELETE FROM Tasks WHERE True;
 
 INSERT INTO Tasks (assignedDate, dueDate, type, description, submitted, user) VALUES ('2023-04-19 16:47:22', '2024-03-16 02:23:45', 'in sagittis dui vel nisl duis ac nibh', 'nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus', 0, 1);
