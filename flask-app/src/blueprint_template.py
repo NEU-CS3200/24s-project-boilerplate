@@ -18,10 +18,13 @@ def get_helper(query):
     return jsonify(data)
 
 
-def post_helper(table, return_data = False):
-    def to_str(val):
+
+def to_str(val):
         s = isinstance(val, str)
         return ('\'{}\'','{}')[s].format(val)
+
+
+def post_helper(table, return_data = False):
     data = request.json
     current_app.logger.info(data)
     cols = ', '.join(data.keys())
@@ -34,7 +37,7 @@ def post_helper(table, return_data = False):
 def put_helper(table, val, key = 'id', data = None, return_data = False):
     if data is None: data = request.json
     current_app.logger.info(data)
-    pairs = ', '.join([f'{k} = {v}' for k, v in data.items() if k != key])
+    pairs = ', '.join([f'{k} = {to_str(v)}' for k, v in data.items() if k != key])
     query = f'UPDATE {table} SET {pairs} WHERE {key} = {val}'
     execute(query, commit = True)
     return data if return_data else 'Success!'
