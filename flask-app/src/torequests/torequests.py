@@ -2,15 +2,29 @@ from src.blueprint_template import *
 torequests = Blueprint('requests', __name__)
 
 
-# USER STORY 1.3
-# Gets all unviewed time-off requests and additional information about them
-@torequests.route('/requests', methods = ['GET'])
+# USER STORY 1.3. Gets all unviewed time-off requests and additional information about them
+@torequests.route('/unviewedRequests', methods = ['GET'])
 def get_unapproved_requests():
-    query = 'SELECT *, COUNT(R.id) AS numTimes, SUM(hours) AS hoursOff \
+    query = 'SELECT R.*, COUNT(R.id) AS numTimes, SUM(hours) AS hoursOff \
         FROM TimeOffRequests R JOIN (SELECT *, \
-        TIMEDIFF(endDate, startDate) / 3600 AS hours \
+        TIMESTAMPDIFF(SECOND, startDate, endDate) / 3600 AS hours \
         FROM Times) T ON R.id = T.request \
-        WHERE R.approved is NULL GROUP BY R.id'
+        WHERE R.approved IS NULL GROUP BY R.id'
+    return get_helper(query)
+
+
+# USER STORY 2.2. Gets all unviewed time-off requests for a given location
+@torequests.route('/unviewedRequests/<id>', methods = ['GET'])
+def get_unapproved_requests(id):
+    query = f"""SELECT R.id, U.firstName, U.lastName, R.reason, R.paid,
+            R.submitDate, COUNT(R.id) AS numTimes, SUM(hours) AS hoursOff,
+            MIN(startDate) AS startDate, MAX(endDate) AS endDate
+        FROM TimeOffRequests R JOIN (SELECT *,
+        TIMESTAMPDIFF(SECOND, startDate, endDate) / 3600 AS hours
+        FROM Times) T ON R.id = T.request
+        JOIN Users U ON R.createdBy = U.id
+        JOIN Schedules Sc ON R.schedule = Sc.id
+        WHERE R.approved IS True AND Sc.location = {id} GROUP BY R.id"""
     return get_helper(query)
 
 
@@ -19,27 +33,25 @@ def get_unapproved_requests():
 def get_user_requests(createdBy):
     query = f'SELECT *, COUNT(R.id) AS numTimes, SUM(hours) AS hoursOff \
         FROM TimeOffRequests R JOIN (SELECT *, \
-        TIMEDIFF(endDate, startDate) / 3600 AS hours \
+        TIMESTAMPDIFF(SECOND, startDate, endDate) / 3600 AS hours \
         FROM Times) T ON R.id = T.request \
         WHERE R.createdBy = {createdBy} GROUP BY R.id'
     return get_helper(query)
 
 
-# USER STORY 3.1
-# Adds a new time-off requests
+# USER STORY 3.2. Adds a new time-off request
 @torequests.route('/requests', methods = ['POST'])
 def post_request():
     return post_helper('TimeOffRequests')
 
 
-# USER STORY 1.3
-# Edit the time-off request associated with a given ID
+# USER STORY 1.3. Edit the time-off request associated with a given ID
 @torequests.route('/requests/<id>', methods = ['PUT'])
 def put_request(id):
     return put_helper('TimeOffRequests', id)
 
 
-# Adds a new time interval
+# USER STORY 3.2. Adds a new time interval
 @torequests.route('/times', methods = ['POST'])
 def post_time():
     return post_helper('Times')
