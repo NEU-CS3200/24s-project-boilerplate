@@ -1,5 +1,9 @@
 DROP DATABASE IF EXISTS Scheduling;
 CREATE DATABASE Scheduling;
+
+GRANT ALL PRIVILEGES ON Scheduling.* TO 'webapp'@'%';
+FLUSH PRIVILEGES;
+
 USE Scheduling;
 
 
@@ -13,6 +17,7 @@ CREATE TABLE Users (
     active BOOLEAN DEFAULT TRUE -- If they're still employed
 );
 
+-- Indicates user-manager relationships
 CREATE TABLE UserManagers (
     employee INTEGER,
     manager INTEGER,
@@ -66,6 +71,7 @@ CREATE TABLE TimeOffRequests (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- Multivalued attribute of time-off requests
 CREATE TABLE Times (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     startDate DATETIME NOT NULL,

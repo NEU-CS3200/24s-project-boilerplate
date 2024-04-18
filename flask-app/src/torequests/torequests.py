@@ -2,8 +2,8 @@ from src.blueprint_template import *
 torequests = Blueprint('requests', __name__)
 
 
-# Gets all unviewed time-off requests and additional information about them
-@torequests.route('/requests', methods = ['GET'])
+# USER STORY 1.3. Gets all unviewed time-off requests and additional information about them
+@torequests.route('/unviewedRequests', methods = ['GET'])
 def get_unapproved_requests():
     query = 'SELECT * FROM TimeOffRequests'
     return get_helper(query)
@@ -14,25 +14,25 @@ def get_unapproved_requests():
 def get_user_requests(createdBy):
     query = f'SELECT *, COUNT(R.id) AS numTimes, SUM(hours) AS hoursOff \
         FROM TimeOffRequests R JOIN (SELECT *, \
-        TIMEDIFF(endDate, startDate) / 3600 AS hours \
+        TIMESTAMPDIFF(SECOND, startDate, endDate) / 3600 AS hours \
         FROM Times) T ON R.id = T.request \
         WHERE R.createdBy = {createdBy} GROUP BY R.id'
     return get_helper(query)
 
 
-# Adds a new time-off requests
+# USER STORY 3.2. Adds a new time-off request
 @torequests.route('/requests', methods = ['POST'])
 def post_request():
     return post_helper('TimeOffRequests')
 
 
-# Edit the time-off request associated with a given ID
+# USER STORY 1.3. Edit the time-off request associated with a given ID
 @torequests.route('/requests/<id>', methods = ['PUT'])
 def put_request(id):
     return put_helper('TimeOffRequests', id)
 
 
-# Adds a new time interval
+# USER STORY 3.2. Adds a new time interval
 @torequests.route('/times', methods = ['POST'])
 def post_time():
     return post_helper('Times')
