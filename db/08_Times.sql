@@ -101,6 +101,7 @@ INSERT INTO Times (startDate, endDate, request, id) VALUES ('2023-10-04 23:32:54
 INSERT INTO Times (startDate, endDate, request, id) VALUES ('2024-03-26 23:35:11', '2023-05-03 13:42:05', 46, 99);
 INSERT INTO Times (startDate, endDate, request, id) VALUES ('2024-02-02 03:36:42', '2023-08-23 05:16:11', 68, 100);
 
-UPDATE Times SET startDate = TIMEDIFF(endDate, startDate) WHERE startDate > endDate;
-UPDATE Times SET endDate = ADDTIME(endDate, -startDate) WHERE startDate < 0;
-UPDATE Times SET startDate = ADDTIME(endDate, startDate) WHERE startDate < 0;
+-- Fixing startDate to be before endDate
+UPDATE Times SET startDate = ADDDATE(startDate, INTERVAL TIMESTAMPDIFF(SECOND, endDate, startDate) SECOND) WHERE startDate > endDate;
+UPDATE Times SET endDate = ADDDATE(endDate, INTERVAL TIMESTAMPDIFF(SECOND, endDate, startDate) / 2 SECOND) WHERE startDate > endDate;
+UPDATE Times SET startDate = ADDDATE(endDate, INTERVAL TIMESTAMPDIFF(SECOND, startDate, endDate) SECOND) WHERE startDate > endDate;
