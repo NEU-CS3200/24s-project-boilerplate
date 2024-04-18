@@ -1,5 +1,9 @@
 DROP DATABASE IF EXISTS Scheduling;
 CREATE DATABASE Scheduling;
+
+GRANT ALL PRIVILEGES ON Scheduling.* TO 'webapp'@'%';
+FLUSH PRIVILEGES;
+
 USE Scheduling;
 
 
