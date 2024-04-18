@@ -201,6 +201,7 @@ INSERT INTO Shifts (duty, dayOfWeek, startTime, endTime, overtime, employee, sch
 INSERT INTO Shifts (duty, dayOfWeek, startTime, endTime, overtime, employee, schedule, id) VALUES ('Environmental Specialist', 6, '5:02:00', '6:03:00', 0, 24, 40, 199);
 INSERT INTO Shifts (duty, dayOfWeek, startTime, endTime, overtime, employee, schedule, id) VALUES ('Accounting Assistant III', 6, '8:41:00', '14:04:00', 1, 31, 9, 200);
 
+-- Fixing startTime to be before endTime
 UPDATE Shifts SET startTime = TIMEDIFF(endTime, startTime) WHERE startTime > endTime;
 UPDATE Shifts SET endTime = ADDTIME(endTime, -startTime) WHERE startTime < 0;
 UPDATE Shifts SET startTime = ADDTIME(endTime, startTime) WHERE startTime < 0;
