@@ -14,7 +14,7 @@ def execute(query, commit = False):
 def get_helper(query):
     cursor = execute(query)
     cols = [x[0] for x in cursor.description]
-    data = [dict(zip(cols, f'{row}'))) for row in cursor.fetchall()]
+    data = [dict(zip(cols, [str(x) for x in row]))) for row in cursor.fetchall()]
     return jsonify(data)
 
 
