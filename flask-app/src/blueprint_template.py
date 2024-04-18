@@ -53,6 +53,7 @@ def post_helper(table, return_data = False):
 def put_helper(table, val, key = 'id', data = None, return_data = False):
     if data is None: data = request.json
     current_app.logger.info(data)
+    if len(data) == 0: return 'Success!'
     pairs = ', '.join([f'{k} = {to_str(v)}' for k, v in data.items() if k != key])
     query = f'UPDATE {table} SET {pairs} WHERE {key} = {val}'
     execute(query, commit = True)
