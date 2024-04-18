@@ -5,13 +5,13 @@ shifts = Blueprint('shifts', __name__)
 def shifts_get_helper(query):
     cursor = execute(query)
     cols = [x[0] for x in cursor.description]
+    data = [dict(zip(cols, row)) for row in cursor.fetchall()]
     for i in range(len(data)):
         # Extract total seconds and convert to hours
         start_seconds = data[i]['startTime'].total_seconds()
         end_seconds = data[i]['endTime'].total_seconds()
         data[i]['startTime'] = start_seconds / 3600
         data[i]['endTime'] = end_seconds / 3600
-    data = [dict(zip(cols, row)) for row in cursor.fetchall()]
     return jsonify(data)
     
 
