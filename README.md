@@ -7,16 +7,18 @@ Our project aims to create a comprehensive scheduling application using the Apps
 
 ## Key Features of Personas:
 - Owner
-  -  Can access locations using a GET
-  -  Allowed to pull information about specific shifts using a GET
+  -  Can access locations using a GET.
+  -  Allowed to pull information about specific shifts using a GET.
     
 - Employee
   - Employees are permitted to request time off with a POST route.
+  - Able to view their schedules via a GET.
 
 - Manager
   - Allowed to access the information of other managers' schedule information via a GET.
   - Managers can view all employees/users, choose one, and delete them using a DELETE route from the database.
-  - Can access a table of all employee's tasks using a GET
+  - Can access a table of all employee's tasks using a GET.
+  - Able to edit an employee's role via a PUT route.
  
 -------------------------------------------------------------------------------
 
