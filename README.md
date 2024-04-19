@@ -2,6 +2,7 @@
 
 Our project aims to create a comprehensive scheduling application using the AppsSmith platform. The UI is customized to meet the scheduling needs of owners, employees, and managers within a business context. By leveraging AppSmith's capabilities, we provide a streamlined and intuitive scheduling solution tailored for different organizational roles.
 
+You can see an overview of the entire project here: https://www.youtube.com/watch?v=vKeo7o4iGt8
 
 -------------------------------------------------------------------------------
 
