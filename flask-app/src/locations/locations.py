@@ -28,7 +28,7 @@ def put_location(id):
 
 # Delete a location and all associated shifts
 @locations.route('/locations/<id>', methods = ['DELETE'])
-def delete_shift(id):
+def delete_location(id):
     query = 'DELETE FROM Shifts WHERE id IN \
         (SELECT Sh.id FROM Shifts Sh \
         JOIN Schedules Sc ON Sh.schedule = Sc.id)'

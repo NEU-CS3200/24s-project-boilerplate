@@ -2,6 +2,8 @@ from src.blueprint_template import *
 shifts = Blueprint('shifts', __name__)
 
 
+# Helper function for GET requests
+# Turns startTime and endTime into JSON-compatible types
 def shifts_get_helper(query):
     cursor = execute(query)
     cols = [x[0] for x in cursor.description]
@@ -68,8 +70,8 @@ def delete_shift(id):
 def transfer_shifts():
     data = request.json
     current_app.logger.info(data)
-    id1, id2 = data['fromEmployee'], data['toEmployee']
-    query = f'UPDATE Shifts SET employee = {id2} WHERE employee = {id1}'
+    fromId, toId = data['fromId'], data['toId']
+    query = f'UPDATE Shifts SET employee = {fromId} WHERE employee = {toId}'
     execute(query, commit = True)
     return 'Success!'
 
