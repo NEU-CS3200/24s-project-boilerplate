@@ -2,6 +2,8 @@ from src.blueprint_template import *
 shifts = Blueprint('shifts', __name__)
 
 
+# Helper function for GET requests
+# Turns startTime and endTime into JSON-compatible types
 def shifts_get_helper(query):
     cursor = execute(query)
     cols = [x[0] for x in cursor.description]
