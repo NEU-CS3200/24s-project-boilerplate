@@ -64,12 +64,9 @@ def delete_shift(id):
 
 
 # USER STORY 3.1. Transfer an employees shifts to another employee
-@shifts.route('/transferShifts', methods = ['PUT'])
-def transfer_shifts():
-    data = request.json
-    current_app.logger.info(data)
-    id1, id2 = data['fromEmployee'], data['toEmployee']
-    query = f'UPDATE Shifts SET employee = {id2} WHERE employee = {id1}'
+@shifts.route('/transferShifts/<fromId>/<toId>', methods = ['PUT'])
+def transfer_shifts(fromId, toId):
+    query = f'UPDATE Shifts SET employee = {fromId} WHERE employee = {toId}'
     execute(query, commit = True)
     return 'Success!'
 
