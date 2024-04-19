@@ -2,8 +2,8 @@ from src.blueprint_template import *
 torequests = Blueprint('requests', __name__)
 
 
-# USER STORY 1.3. Gets all unviewed time-off requests and additional information about them
-@torequests.route('/unviewedRequests', methods = ['GET'])
+# Gets all unviewed time-off requests and additional information about them
+@torequests.route('/requests', methods = ['GET'])
 def get_unapproved_requests():
     query = 'SELECT * FROM TimeOffRequests'
     return get_helper(query)
@@ -20,10 +20,28 @@ def get_user_requests(createdBy):
     return get_helper(query)
 
 
-# USER STORY 3.2. Adds a new time-off request
+# Adds a new time-off requests
 @torequests.route('/requests', methods = ['POST'])
 def post_request():
-    return post_helper('TimeOffRequests')
+    data = request.json
+    id_u = data.get('id')
+    reason_u = data.get('reason')
+    paid_u = data.get('paid')
+    submitDate_u = data.get('submitDate')
+    createdBy_u = data.get('createdBy')
+    schedule_u = data.get("schedule")
+    query = 'INSERT INTO TimeOffRequests (id, reason, paid, schedule, submitDate, createdBy) VALUES("'
+    query += str(id_u) + '", "'
+    query += reason_u + '", "'
+    query += str(paid_u) + '", "'
+    query += str(schedule_u) + '", "'
+    query += submitDate_u + '", "'
+    query += str(createdBy_u) + '")'
+    current_app.logger.info(query)
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    return "Success"
 
 
 # USER STORY 1.3. Edit the time-off request associated with a given ID
