@@ -35,11 +35,11 @@ def put_user(id):
 
 
 # USER STORY 2.4. Moving an employee's shifts to a new location
-@users.route('/moveLocation/<userId>/<locationId>', methods = ['PUT'])
-def move_locations(userId, locationId):
-    # data = request.json
-    # current_app.logger.info(data)
-    # userId, locationId = data['userId'], data['locationId']
+@users.route('/moveLocation', methods = ['PUT'])
+def move_locations():
+    data = request.json
+    current_app.logger.info(data)
+    userId, locationId = data['userId'], data['locationId']
     query = f'UPDATE Shifts \
         SET schedule = ( \
             SELECT MAX(Sc.id) \
